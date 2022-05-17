@@ -1,24 +1,73 @@
-import logo from './logo.svg';
-import './App.css';
+import GlobalStyles from "./styles/GlobalStyles";
+
+import { Container, Input, InputField, CountrysContainer } from "./styles";
+
+import { FaSearch } from "react-icons/fa";
+import Countrys from "./components/Countrys";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [countrys, setCountrys] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  // const pages = Math.ceil(countrys.length / itensPerPage);
+  // const startIndex = currentPage * itensPerPage;
+  // const endIndex = startIndex + itensPerPage;
+  // const currentCountrys = countrys.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    async function getInitialData() {
+      const response = await fetch("https://restcountries.com/v2/all");
+
+      const data = await response.json();
+
+      console.log(data);
+      setCountrys(data);
+    }
+
+    getInitialData();
+  }, []);
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const filteredCountrys = countrys.filter((country) =>
+    country.name.toLowerCase().includes(search.toLocaleLowerCase())
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Container>
+        <InputField>
+          <FaSearch color="white" />
+          <Input
+            onChange={handleChange}
+            type="text"
+            placeholder="Search for a country..."
+          />
+        </InputField>
+
+        <CountrysContainer>
+          {filteredCountrys.map((country) => {
+            return (
+              <>
+                <Countrys
+                  key={country.name}
+                  image={country.flags.svg}
+                  name={country.name}
+                  capital={country.capital}
+                  population={country.population}
+                  region={country.subregion}
+                />
+              </>
+            );
+          })}
+        </CountrysContainer>
+      </Container>
+      <GlobalStyles />
+    </>
   );
 }
 
