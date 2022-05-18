@@ -30,11 +30,11 @@ function Country({ countries }) {
       region = country.region;
       subregion = country.subregion;
 
-      country.currencies.forEach((currency) => {
+      country.currencies?.forEach((currency) => {
         currencies.push(currency.name);
       });
 
-      country.languages.forEach((language) => {
+      country.languages?.forEach((language) => {
         languages.push(language.name);
       });
     }
@@ -76,7 +76,7 @@ function Country({ countries }) {
             </Item>
             <Item>
               Currencies:{" "}
-              {currencies.map((currency) => {
+              {currencies?.map((currency) => {
                 if (currencies.indexOf(currency) !== currencies.length - 1) {
                   return <span>{currency}, </span>;
                 } else {
@@ -91,7 +91,7 @@ function Country({ countries }) {
             </Item>
             <Item>
               Languages:{" "}
-              {languages.map((language) => {
+              {languages?.map((language) => {
                 if (languages.indexOf(language) !== languages.length - 1) {
                   return <span>{language}, </span>;
                 } else {
