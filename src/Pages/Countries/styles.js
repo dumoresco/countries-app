@@ -4,14 +4,6 @@ export const Container = styled.div`
   width: 1280px;
   margin: 0 auto;
   padding: 20px;
-
-  .pagination {
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    align-items: flex-start;
-    margin-top: 50px;
-  }
 `;
 
 export const InputField = styled.div`

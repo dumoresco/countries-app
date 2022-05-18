@@ -1,10 +1,20 @@
 import React from "react";
 
 import { Container } from "./styles";
-
-const Countrys = ({ image, name, population, region, capital }) => {
+const Countries = ({
+  image,
+  name,
+  population,
+  region,
+  capital,
+  showDetails,
+  code,
+}) => {
+  const showDetailsHandler = () => {
+    showDetails(code);
+  };
   return (
-    <Container>
+    <Container onClick={showDetailsHandler}>
       <img alt="Bandeira do país" className="flag" src={image} />
       <div className="text-container">
         <h1>{name}</h1>
@@ -22,4 +32,4 @@ const Countrys = ({ image, name, population, region, capital }) => {
   );
 };
 
-export default Countrys;
+export default Countries;

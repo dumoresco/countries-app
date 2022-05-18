@@ -1,20 +1,17 @@
-import GlobalStyles from "./styles/GlobalStyles";
-
-import { Container, Input, InputField, CountrysContainer } from "./styles";
-
-import { FaSearch } from "react-icons/fa";
-import Countrys from "./components/Countrys";
+import React from "react";
 import { useEffect, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { Container, Input, InputField, CountrysContainer } from "./styles";
+import Country from "./Pages/Country";
+import GlobalStyles from "./styles/GlobalStyles";
+import { FaSearch } from "react-icons/fa";
+
+import Countrys from "./components/Countrys";
 
 function App() {
-  const [countrys, setCountrys] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  // const pages = Math.ceil(countrys.length / itensPerPage);
-  // const startIndex = currentPage * itensPerPage;
-  // const endIndex = startIndex + itensPerPage;
-  // const currentCountrys = countrys.slice(startIndex, endIndex);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getInitialData() {
@@ -22,8 +19,7 @@ function App() {
 
       const data = await response.json();
 
-      console.log(data);
-      setCountrys(data);
+      setCountries(data);
     }
 
     getInitialData();
@@ -33,39 +29,56 @@ function App() {
     setSearch(e.target.value);
   };
 
-  const filteredCountrys = countrys.filter((country) =>
+  const filteredCountries = countries.filter((country) =>
     country.name.toLowerCase().includes(search.toLocaleLowerCase())
   );
 
+  const showDetails = (code) => {
+    navigate(`/${code}`);
+  };
+
   return (
     <>
-      <Container>
-        <InputField>
-          <FaSearch color="white" />
-          <Input
-            onChange={handleChange}
-            type="text"
-            placeholder="Search for a country..."
-          />
-        </InputField>
-
-        <CountrysContainer>
-          {filteredCountrys.map((country) => {
-            return (
-              <>
-                <Countrys
-                  key={country.name}
-                  image={country.flags.svg}
-                  name={country.name}
-                  capital={country.capital}
-                  population={country.population}
-                  region={country.subregion}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Container>
+              <InputField>
+                <FaSearch color="white" />
+                <Input
+                  onChange={handleChange}
+                  type="text"
+                  placeholder="Search for a country..."
                 />
-              </>
-            );
-          })}
-        </CountrysContainer>
-      </Container>
+              </InputField>
+
+              <CountrysContainer>
+                {filteredCountries.map((country) => {
+                  return (
+                    <>
+                      <Countrys
+                        key={country.alpha3Code}
+                        image={country.flags.svg}
+                        name={country.name}
+                        capital={country.capital}
+                        population={country.population}
+                        region={country.subregion}
+                        showDetails={showDetails}
+                        code={country.alpha3Code}
+                      />
+                    </>
+                  );
+                })}
+              </CountrysContainer>
+            </Container>
+          }
+        ></Route>
+        <Route
+          path="/:name"
+          element={<Country countries={countries} />}
+        ></Route>
+      </Routes>
       <GlobalStyles />
     </>
   );
