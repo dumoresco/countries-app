@@ -43,35 +43,40 @@ function App() {
         <Route
           path="/"
           element={
-            <Container>
-              <InputField>
-                <FaSearch color="white" />
-                <Input
-                  onChange={handleChange}
-                  type="text"
-                  placeholder="Search for a country..."
-                />
-              </InputField>
+            <>
+              <Container>
+                {" "}
+                <div className="container">
+                  <InputField>
+                    <FaSearch color="white" />
+                    <Input
+                      onChange={handleChange}
+                      type="text"
+                      placeholder="Search for a country..."
+                    />
+                  </InputField>
 
-              <CountrysContainer>
-                {filteredCountries.map((country) => {
-                  return (
-                    <>
-                      <Countrys
-                        key={country.alpha3Code}
-                        image={country.flags.svg}
-                        name={country.name}
-                        capital={country.capital}
-                        population={country.population}
-                        region={country.subregion}
-                        showDetails={showDetails}
-                        code={country.alpha3Code}
-                      />
-                    </>
-                  );
-                })}
-              </CountrysContainer>
-            </Container>
+                  <CountrysContainer>
+                    {filteredCountries.map((country) => {
+                      return (
+                        <>
+                          <Countrys
+                            key={country.alpha3Code}
+                            image={country.flags.svg}
+                            name={country.name}
+                            capital={country.capital}
+                            population={country.population}
+                            region={country.subregion}
+                            showDetails={showDetails}
+                            code={country.alpha3Code}
+                          />
+                        </>
+                      );
+                    })}
+                  </CountrysContainer>
+                </div>
+              </Container>
+            </>
           }
         ></Route>
         <Route

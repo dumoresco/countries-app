@@ -1,17 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 1280px;
   margin: 0 auto;
   padding: 20px;
 
-  .pagination {
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    align-items: flex-start;
-    margin-top: 50px;
-  }
+  width: 80%;
 `;
 
 export const InputField = styled.div`
@@ -42,7 +35,8 @@ export const Input = styled.input`
 
 export const CountrysContainer = styled.div`
   margin-top: 100px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 60px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
 `;
